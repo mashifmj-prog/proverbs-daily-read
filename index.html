@@ -12,21 +12,32 @@
   <main class="app">
     <header class="top">
       <h1>Proverbs — Daily Study</h1>
-      <p class="subtitle">One chapter a day (chapter 1 on the 1st, chapter 2 on the 2nd, …)</p>
+      <p class="subtitle">One chapter a day (1 → chapter 1, etc.)</p>
       <div class="datetime">
-        <span id="liveDate"></span>
-        <span id="liveClock"></span>
+        <span id="liveDate" aria-live="polite"></span>
+        <span id="liveClock" aria-live="polite"></span>
       </div>
     </header>
+
     <section class="controls">
       <label for="dateOverride">Use date:</label>
       <input id="dateOverride" type="date" />
+      <button id="applyDate">Apply</button>
       <button id="todayBtn">Today</button>
-      <label for="chapterSelect">Or chapter:</label>
-      <select id="chapterSelect">
-        <option value="">Auto</option>
+
+      <label for="translationSelect">Translation:</label>
+      <select id="translationSelect">
+        <option value="WEB">WEB (public domain)</option>
+        <option value="KJV">KJV</option>
+        <option value="NIV">NIV</option>
+        <option value="ESV">ESV</option>
+        <option value="NLT">NLT</option>
       </select>
+
+      <button id="downloadAllBtn">Download All Offline</button>
+      <button id="toggleParallelBtn">Toggle Parallel View</button>
     </section>
+
     <section class="chapter-card">
       <div class="chapter-header">
         <h2 id="chapterTitle">Chapter X</h2>
@@ -36,12 +47,19 @@
           <span id="chapterDate">Date</span>
         </div>
       </div>
-      <div id="chapterText" class="chapter-text" tabindex="0"></div>
+
+      <div class="chapter-container">
+        <!-- This container will hold one or two translation panes in parallel mode -->
+        <div id="chapterPane1" class="chapter-text-pane" tabindex="0"></div>
+        <div id="chapterPane2" class="chapter-text-pane hidden" tabindex="0"></div>
+      </div>
+
       <div class="actions">
         <button id="randomVerseBtn">Pick a random verse</button>
-        <button id="copyChapterBtn">Copy chapter text</button>
+        <button id="copyChapterBtn">Copy chapter (active translation)</button>
       </div>
-      <div id="randomVerseArea" class="random-verse hidden">
+
+      <div id="randomVerseArea" class="random-verse hidden" tabindex="0">
         <h3>Random verse</h3>
         <p id="randomVerseText"></p>
         <div class="share-buttons">
@@ -51,20 +69,23 @@
           <button id="shareFacebook">Facebook</button>
           <button id="copyVerseBtn">Copy verse</button>
         </div>
-        <button id="closeRandom">Close</button>
       </div>
+
       <footer class="footer-note">
-        <small>Translation: World English Bible (Public Domain). Loaded dynamically.</small>
+        <small>Translations loaded dynamically. Ensure you have rights to use them.</small>
       </footer>
     </section>
+
     <aside class="tips">
       <h4>Tips</h4>
       <ul>
-        <li>The app maps day-of-month to Proverbs chapter (1 → chapter 1, … 31 → chapter 31).</li>
-        <li>Months with fewer days automatically end with the last day.</li>
+        <li>Select a translation to read that version.</li>
+        <li>“Download All Offline” caches all translations at once (after first load).</li>
+        <li>Parallel mode shows two translations side by side for comparison.</li>
       </ul>
     </aside>
   </main>
+
   <script src="script.js" defer></script>
 </body>
 </html>
